@@ -1,0 +1,33 @@
+<resources>
+
+    <string-array name="skills_type">
+        <item></item>
+        <item>Language</item>
+        <item>Framework</item>
+        <item>Design pattern</item>
+        <item>Tool</item>
+        <item>Platform</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="cv_template">
+        <item>CV1</item>
+        <item>CV2</item>
+    </string-array>
+
+    <string name="app_name">CV Builder</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">General Information</string>
+    <string name="menu_skills">Technical Skills</string>
+    <string name="menu_work_experience">Work Experience</string>
+    <string name="menu_education">Education</string>
+    <string name="menu_certification">Certifications</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

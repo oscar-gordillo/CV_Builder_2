@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".ui.skills.EditSkillFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Skill Type"/>
+    <Spinner
+        android:id="@+id/sp_skill_type"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawSelectorOnTop="true"
+        android:entries="@array/skills_type"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:hint="type your skill"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_skill_name"></EditText>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:hint="percentage (0-100)"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_skill_percentage"></EditText>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_save_skill"
+        android:text="Save"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_delete_skill"
+        android:text="Delete"
+        />
+
+
+
+</LinearLayout>
