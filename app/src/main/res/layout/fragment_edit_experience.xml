@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".ui.experience.EditExperienceFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Experience"/>
+<!--    <Spinner-->
+<!--        android:id="@+id/sp_skill_type"-->
+<!--        android:layout_margin="10dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:drawSelectorOnTop="true"-->
+<!--        android:entries="@array/skills_type"-->
+<!--        />-->
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:hint="Name of Company"
+        android:layout_height="wrap_content"
+        android:id="@+id/nameCompanyExperience"></EditText>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:hint="City of employment"
+        android:layout_height="wrap_content"
+        android:id="@+id/cityCompanyExperience"></EditText>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:hint="State"
+        android:layout_height="wrap_content"
+        android:id="@+id/stateCompanyExperience"></EditText>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:hint="Start Date"
+        android:layout_height="wrap_content"
+        android:id="@+id/startDateExperience"></EditText>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:hint="End Date"
+        android:layout_height="wrap_content"
+        android:id="@+id/endDateExperience"></EditText>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:hint="Job Title"
+        android:layout_height="wrap_content"
+        android:id="@+id/jobTitleExperience"></EditText>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:hint="Description"
+        android:layout_height="wrap_content"
+        android:id="@+id/descriptionExperience"></EditText>
+
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_save_experience"
+        android:text="Save"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_delete_experience"
+        android:text="Delete"
+        />
+
+
+
+</LinearLayout>

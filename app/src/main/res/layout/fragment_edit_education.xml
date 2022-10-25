@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".ui.certification.EditEducationFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/education"/>
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:hint="@string/name_of_school"
+        android:layout_height="wrap_content"
+        android:id="@+id/schoolNameEducation" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:hint="@string/city"
+        android:layout_height="wrap_content"
+        android:id="@+id/cityEducation" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:hint="@string/state"
+        android:layout_height="wrap_content"
+        android:id="@+id/stateEducation" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:hint="@string/degree"
+        android:layout_height="wrap_content"
+        android:id="@+id/degreeEducation" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:hint="@string/graduation_date"
+        android:layout_height="wrap_content"
+        android:id="@+id/completionDateEducation" />
+
+
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_save_education"
+        android:text="Save"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_delete_education"
+        android:text="Delete"
+        />
+
+
+
+</LinearLayout>

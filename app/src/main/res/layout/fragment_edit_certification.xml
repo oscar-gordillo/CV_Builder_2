@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".ui.certification.EditCertificationFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/certification"/>
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:hint="@string/name"
+        android:layout_height="wrap_content"
+        android:id="@+id/name_Certification" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:hint="@string/organization"
+        android:layout_height="wrap_content"
+        android:id="@+id/organization_Certification" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:hint="@string/date_of_completion"
+        android:layout_height="wrap_content"
+        android:id="@+id/date_Certification" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:hint="@string/expiration_date"
+        android:layout_height="wrap_content"
+        android:id="@+id/expiration_Certification" />
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_save_certification"
+        android:text="Save"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_delete_certification"
+        android:text="Delete"
+        />
+
+
+
+</LinearLayout>
