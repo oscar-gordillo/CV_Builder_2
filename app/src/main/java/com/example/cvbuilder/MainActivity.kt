@@ -1,5 +1,6 @@
 package com.example.cvbuilder
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -19,9 +20,14 @@ import com.example.cvbuilder.db.*
 import com.example.cvbuilder.network.APIClient
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -68,43 +74,79 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem):Boolean {
         if (item.itemId==R.id.action_exportPDF){
 
-            val skills= listOf<Skill>(Skill("language","Java",60),Skill("tool","VSCode",80))
-            val educations= listOf<Education>(Education("MIU","Fairfield","IOWA","Compro","DEC-2024"))
-            val experiences= listOf<Experience>(
-                Experience("MIU","Fairfield","IOWA","JAN-2022","JUL-2022","Monitor","Monitor labs Verill Hall")
-                ,Experience("MIU","Fairfield","IOWA","JUL-2022","DEC-2022","Monitor","Monitor labs Library")
-            )
-            val certification= listOf<Certification>(
-                Certification("AWS Developer","Amazon","JAN-2022","NA")
-                ,Certification("Java Developer","Oracle","AUG-2022","NA")
-            )
-            val cv=CV("Oscar","6465370089","oscar.roncancio@miu.edu","Android Developer","Major phases of SDLC, Web Services, Design Patterns, SOA, Java Programming, Dot Net Programming, Oracle PL/SQL, MS SQL, User Interface, Front End/Back End, OOPS, Project Lead",skills,experiences,educations,certification,"CV2")
-            val gson= Gson()
-            val value=gson.toJson(cv)
-            var call = APIClient.apiInterface().postCV(cv)
+            val scope = CoroutineScope(Job() + Dispatchers.Main)
 
-            call.enqueue(object : Callback<String> { // Make a call to hit the server
-                // hit if you receive the response--> which is to retrieve the List of ImageData
-                override fun onResponse(call: Call<String?>?, response: Response<String?>?) {
-                    if( response!!.isSuccessful){ // Check using non null !! operator
-                        // The deserialized response body of a successful response ie List<Animals>
-                        Toast.makeText(applicationContext,"isSuccessful", Toast.LENGTH_LONG).show()
-                        Log.i("TEST",response.body()!!.toString())
+            scope.launch {
+                val spf= getSharedPreferences("myspf",Context.MODE_PRIVATE)
+                val skills = CVBuilderDatabase(applicationContext).getSkillDao().getAllSkills()
 
-                        val url = "https://ged21c9a6c3b8b0-free1.adb.us-phoenix-1.oraclecloudapps.com/ords/r/mdp/cv-builder-app/test?p5_id="+response.body()!!.toString()
-                        val i = Intent(Intent.ACTION_VIEW)
-                        i.data = Uri.parse(url)
-                        startActivity(i)
+
+                val educations= listOf<Education>(Education("MIU","Fairfield","IOWA","Compro","DEC-2024"))
+                val experiences= listOf<Experience>(
+                    Experience("MIU","Fairfield","IOWA","JAN-2022","JUL-2022","Monitor","Monitor labs Verill Hall")
+                    ,Experience("MIU","Fairfield","IOWA","JUL-2022","DEC-2022","Monitor","Monitor labs Library")
+                )
+                val certification= listOf<Certification>(
+                    Certification("AWS Developer","Amazon","JAN-2022","NA")
+                    ,Certification("Java Developer","Oracle","AUG-2022","NA")
+                )
+                val cv=CV(spf.getString("name","")!!
+                    ,spf.getString("phone","")!!
+                    ,spf.getString("email","")!!
+                    ,spf.getString("title","")!!
+                    ,spf.getString("description","")!!
+                    ,skills
+                    ,experiences
+                    ,educations
+                    ,certification
+                    ,spf.getString("template","")!!)
+                val gson= Gson()
+                val value=gson.toJson(cv)
+                var call = APIClient.apiInterface().postCV(cv)
+
+                call.enqueue(object : Callback<String> { // Make a call to hit the server
+                    // hit if you receive the response--> which is to retrieve the List of ImageData
+                    override fun onResponse(call: Call<String?>?, response: Response<String?>?) {
+                        if( response!!.isSuccessful){ // Check using non null !! operator
+                            // The deserialized response body of a successful response ie List<Animals>
+                            Toast.makeText(applicationContext,"Downloading PDF...", Toast.LENGTH_LONG).show()
+                            Log.i("TEST",response.body()!!.toString())
+
+                            val spf= getSharedPreferences("myspf", Context.MODE_PRIVATE)
+                            val spe=spf.edit()
+                            spe.putString("cloud_id",response.body()!!.toString())
+                            spe.apply()
+
+                            /*val format =
+                                "https://drive.google.com/viewerng/viewer?embedded=true&url=%s"
+                            val fullPath: String =
+                                java.lang.String.format(Locale.ENGLISH, format, "https://ged21c9a6c3b8b0-free1.adb.us-phoenix-1.oraclecloudapps.com/ords/r/mdp/cv-builder-app/test?p5_id="+response.body()!!.toString())
+*/
+                            val url = "https://ged21c9a6c3b8b0-free1.adb.us-phoenix-1.oraclecloudapps.com/ords/r/mdp/cv-builder-app/test?p5_id="+response.body()!!.toString()
+                            val i = Intent(Intent.ACTION_VIEW,Uri.parse(url))
+                            startActivity(i)
+                        }
                     }
-                }
-                // Unable to get a response
-                override fun onFailure(call: Call<String?>?, t: Throwable?) {
-                    // The localized description of this throwable, like getErrorMessage from throwable
-                    Toast.makeText(applicationContext,"An Error Occured  ${t?.localizedMessage}", Toast.LENGTH_LONG).show()
+                    // Unable to get a response
+                    override fun onFailure(call: Call<String?>?, t: Throwable?) {
+                        // The localized description of this throwable, like getErrorMessage from throwable
+                        Toast.makeText(applicationContext,"An Error Occured  ${t?.localizedMessage}", Toast.LENGTH_LONG).show()
 
-                }
+                    }
 
-            })
+                })
+
+            }
+
+
+
+            /*val skills= listOf<Skill>(Skill("language","Java",60)
+                ,Skill("tool","VSCode",80)
+                ,Skill("language","SQL",100)
+                ,Skill("language","C++",50)
+                ,Skill("language","PLSQL",80)
+            )*/
+
 
         }
         return super.onOptionsItemSelected(item)

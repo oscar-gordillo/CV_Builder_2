@@ -15,6 +15,9 @@ import androidx.room.RoomDatabase
 abstract class CVBuilderDatabase():RoomDatabase() { // Must Inherit from RoomDatabase
 
     abstract fun getSkillDao() : SkillDao // Need this function to get the Dao for the Entity
+    abstract fun getExperienceDao() : ExperienceDAO
+    abstract fun getEducationDao() : EducationDAO
+    abstract fun getCertificationDao() : CertificationDAO
     // Build RoomDB
     companion object {
          //  means that this field is immediately made visible to other threads

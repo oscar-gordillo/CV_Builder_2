@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cvbuilder.R
 import com.example.cvbuilder.db.CV
 import com.example.cvbuilder.db.Skill
+import kotlinx.android.synthetic.main.experience_detail.view.*
 import kotlinx.android.synthetic.main.home_cv_detail.view.*
 import kotlinx.android.synthetic.main.skill_detail.view.*
 

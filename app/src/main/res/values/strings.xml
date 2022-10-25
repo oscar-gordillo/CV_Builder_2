@@ -30,4 +30,19 @@
     <string name="menu_certification">Certifications</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add">Add</string>
+    <string name="name_of_school">Name of School</string>
+    <string name="education">Education</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="description">Description</string>
+    <string name="job_title">Job Title</string>
+    <string name="graduation_date">Graduation Date</string>
+    <string name="degree">Degree</string>
+    <string name="certification">Certification</string>
+    <string name="name_of_certification">Name of Certification</string>
+    <string name="name">Name</string>
+    <string name="organization">Organization</string>
+    <string name="date_of_completion">date of completion</string>
+    <string name="expiration_date">Expiration Date</string>
 </resources>

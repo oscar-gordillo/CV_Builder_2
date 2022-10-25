@@ -25,7 +25,11 @@
         android:id="@+id/nav_experience"
         android:name="com.example.cvbuilder.ui.experience.ExperienceFragment"
         android:label="@string/menu_work_experience"
-        tools:layout="@layout/fragment_experience" />
+        tools:layout="@layout/fragment_experience" >
+        <action
+            android:id="@+id/action_nav_experience_to_editExperienceFragment"
+            app:destination="@id/editExperienceFragment" />
+    </fragment>
     <fragment
         android:id="@+id/editSkillFragment"
         android:name="com.example.cvbuilder.ui.skills.EditSkillFragment"
@@ -39,5 +43,66 @@
             app:argType="com.example.cvbuilder.db.Skill"
             app:nullable="true"
             android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/editExperienceFragment"
+        android:name="com.example.cvbuilder.ui.experience.EditExperienceFragment"
+        android:label="EditExperienceFragment"
+        tools:layout="@layout/fragment_edit_experience">
+        <action
+            android:id="@+id/action_editExperienceFragment_to_nav_experience"
+            app:destination="@id/nav_experience" />
+        <argument
+            android:name="Experience"
+            app:argType="com.example.cvbuilder.db.Experience"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/editEducationFragment"
+        android:name="com.example.cvbuilder.ui.education.EditEducationFragment"
+        android:label="fragment_edit_education"
+        tools:layout="@layout/fragment_edit_education" >
+        <action
+            android:id="@+id/action_editEducationFragment_to_educationFragment"
+            app:destination="@id/nav_education" />
+        <argument
+            android:name="Education"
+            app:argType="com.example.cvbuilder.db.Education"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_education"
+        android:name="com.example.cvbuilder.ui.education.EducationFragment"
+        android:label="fragment_education"
+        tools:layout="@layout/fragment_education" >
+        <action
+            android:id="@+id/action_educationFragment_to_editEducationFragment"
+            app:destination="@id/editEducationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editCertificationFragment"
+        android:name="com.example.cvbuilder.ui.certification.EditCertificationFragment"
+        android:label="EditCertificationFragment"
+        tools:layout="@layout/fragment_edit_certification" >
+
+        <action
+            android:id="@+id/action_editCertificationFragment_to_nav_certification"
+            app:destination="@id/nav_certification" />
+        <argument
+            android:name="Certification"
+            app:argType="com.example.cvbuilder.db.Certification"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_certification"
+        android:name="com.example.cvbuilder.ui.certification.CertificationFragment"
+        android:label="fragment_certification"
+        tools:layout="@layout/fragment_certification" >
+        <action
+            android:id="@+id/action_nav_certification_to_editCertificationFragment"
+            app:destination="@id/editCertificationFragment" />
     </fragment>
 </navigation>

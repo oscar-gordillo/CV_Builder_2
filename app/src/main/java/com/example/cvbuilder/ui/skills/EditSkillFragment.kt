@@ -70,6 +70,7 @@ class EditSkillFragment : BaseFragment() {
                 }
             }
             binding.etSkillName.setText(skill?.name)
+            binding.etSkillPercentage.setText(skill?.percentage.toString())
         }
         binding.btDeleteSkill.setOnClickListener {
             if (skill != null) deleteSkill() else Toast.makeText(context,"Cannot delete",Toast.LENGTH_LONG).show()
