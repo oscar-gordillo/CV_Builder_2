@@ -9,7 +9,11 @@
         android:id="@+id/nav_home"
         android:name="com.example.cvbuilder.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_homeFragmentCloudAccount"
+            app:destination="@id/homeFragmentCloudAccount" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_skills"
@@ -105,4 +109,9 @@
             android:id="@+id/action_nav_certification_to_editCertificationFragment"
             app:destination="@id/editCertificationFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/homeFragmentCloudAccount"
+        android:name="com.example.cvbuilder.ui.home.HomeFragmentCloudAccount"
+        android:label="fragment_home_cloud_account"
+        tools:layout="@layout/fragment_home_cloud_account" />
 </navigation>

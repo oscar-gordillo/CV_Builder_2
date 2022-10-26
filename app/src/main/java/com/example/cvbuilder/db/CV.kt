@@ -14,5 +14,6 @@ data class CV(
     val experiences:List<Experience>,
     val educations:List<Education>,
     val certifications:List<Certification>,
-    val template:String
+    val template:String,
+    val image:String
 )

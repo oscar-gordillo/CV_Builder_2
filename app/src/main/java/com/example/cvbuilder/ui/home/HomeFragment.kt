@@ -9,12 +9,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.cvbuilder.databinding.FragmentHomeBinding
 import com.example.cvbuilder.db.CVBuilderDatabase
 import com.example.cvbuilder.ui.BaseFragment
+import com.example.cvbuilder.ui.skills.SkillsFragmentDirections
 import kotlinx.coroutines.launch
 
 class HomeFragment : BaseFragment() {
@@ -66,6 +68,11 @@ class HomeFragment : BaseFragment() {
                 spinner.setSelection(i)
                 break
             }
+        }
+
+        binding.homeBtnCloudAccount.setOnClickListener {
+            val action= HomeFragmentDirections.actionNavHomeToHomeFragmentCloudAccount()
+            Navigation.findNavController(it).navigate(action)
         }
 
         binding.homeBtnSave.setOnClickListener {

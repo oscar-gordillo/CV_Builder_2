@@ -8,6 +8,7 @@
 
     <TextView
         android:layout_width="match_parent"
+        android:layout_margin="10dp"
         android:layout_height="wrap_content"
         android:text="Skill Type"/>
     <Spinner
@@ -30,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_margin="10dp"
         android:hint="percentage (0-100)"
+        android:inputType="number"
         android:layout_height="wrap_content"
         android:id="@+id/et_skill_percentage"></EditText>
 

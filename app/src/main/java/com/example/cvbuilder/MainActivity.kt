@@ -1,14 +1,24 @@
 package com.example.cvbuilder
 
+import android.Manifest
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -27,15 +37,45 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
+import java.io.ByteArrayOutputStream
+
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var startforResultGalley: ActivityResultLauncher<Intent>
+    var sImage:String=""
+
+    private val RECORD_REQUEST_CODE = 101
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        startforResultGalley = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if(it!=null) {
+                Toast.makeText(this, it.data?.data.toString(), Toast.LENGTH_LONG).show()
+                Log.i("TEST", it.data?.data.toString())
+                val uri = it.data?.data
+
+                try {
+                    val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+                    val stream = ByteArrayOutputStream()
+                    bitmap.compress(Bitmap.CompressFormat.JPEG,50,stream);
+                    val bytes = stream.toByteArray()
+                    sImage= Base64.encodeToString(bytes, Base64.DEFAULT);
+                    Log.i("TEST",sImage)
+                } catch (e: Exception) {
+                    // TODO: handle exception
+                    e.printStackTrace()
+                    Log.d("error", "onActivityResult: $e")
+                }
+
+
+            }
+            else
+                Toast.makeText(this,"Fail to retrieve", Toast.LENGTH_LONG).show()
+        }
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -72,7 +112,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem):Boolean {
+        if (item.itemId==R.id.action_exportPDFImage){
+            val i = Intent()
+            // Activity Action for the intent : Pick an item from the data, returning what was selected.
+            i.action = Intent.ACTION_PICK
+            i.type = "image/*"
+            startforResultGalley.launch(i)
+        }
         if (item.itemId==R.id.action_exportPDF){
+
+
+            /*try {
+                val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+                val stream = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+                val bytes = stream.toByteArray()
+                sImage= Base64.encodeToString(bytes, Base64.DEFAULT);
+                Log.i("TEST",sImage)
+            } catch (e: Exception) {
+                // TODO: handle exception
+                e.printStackTrace()
+                Log.d("error", "onActivityResult: $e")
+            }*/
 
             val scope = CoroutineScope(Job() + Dispatchers.Main)
 
@@ -80,16 +141,22 @@ class MainActivity : AppCompatActivity() {
                 val spf= getSharedPreferences("myspf",Context.MODE_PRIVATE)
                 val skills = CVBuilderDatabase(applicationContext).getSkillDao().getAllSkills()
 
+                val educations = CVBuilderDatabase(applicationContext).getEducationDao().getAllEducation()
+                //val educations= listOf<Education>(Education("MIU","Fairfield","IOWA","Compro","DEC-2024"))
 
-                val educations= listOf<Education>(Education("MIU","Fairfield","IOWA","Compro","DEC-2024"))
-                val experiences= listOf<Experience>(
+                val experiences=CVBuilderDatabase(applicationContext).getExperienceDao().getAllExperience()
+
+                /*val experiences= listOf<Experience>(
                     Experience("MIU","Fairfield","IOWA","JAN-2022","JUL-2022","Monitor","Monitor labs Verill Hall")
                     ,Experience("MIU","Fairfield","IOWA","JUL-2022","DEC-2022","Monitor","Monitor labs Library")
-                )
-                val certification= listOf<Certification>(
+                )*/
+
+                val certifications=CVBuilderDatabase(applicationContext).getCertificationDao().getAllCertification()
+                /*val certification= listOf<Certification>(
                     Certification("AWS Developer","Amazon","JAN-2022","NA")
                     ,Certification("Java Developer","Oracle","AUG-2022","NA")
-                )
+                )*/
+                Log.i("TEST1",sImage)
                 val cv=CV(spf.getString("name","")!!
                     ,spf.getString("phone","")!!
                     ,spf.getString("email","")!!
@@ -98,10 +165,12 @@ class MainActivity : AppCompatActivity() {
                     ,skills
                     ,experiences
                     ,educations
-                    ,certification
-                    ,spf.getString("template","")!!)
+                    ,certifications
+                    ,spf.getString("template","")!!
+                    ,sImage)
                 val gson= Gson()
                 val value=gson.toJson(cv)
+                Log.i("TEST2",value)
                 var call = APIClient.apiInterface().postCV(cv)
 
                 call.enqueue(object : Callback<String> { // Make a call to hit the server
@@ -150,5 +219,26 @@ class MainActivity : AppCompatActivity() {
 
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun makeRequest() {
+        ActivityCompat.requestPermissions(this,
+            arrayOf(Manifest.permission.RECORD_AUDIO),
+            RECORD_REQUEST_CODE)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>, grantResults : IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            RECORD_REQUEST_CODE -> {
+                if (grantResults.isEmpty() || grantResults[0] != PackageManager.
+                    PERMISSION_GRANTED) {
+                    Toast.makeText(this,"Permission has been denied by user",Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this,"Permission has been granted by the user",Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 }

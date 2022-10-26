@@ -79,6 +79,25 @@ class EditSkillFragment : BaseFragment() {
             val type=binding.spSkillType.selectedItem.toString()
             val name=binding.etSkillName.text.toString()
             val percentage=binding.etSkillPercentage.text.toString()
+            if (name.isEmpty()) {
+                binding.etSkillName.error="Required"
+                return@setOnClickListener
+            }
+            if (percentage.isEmpty()) {
+                binding.etSkillPercentage.error="Required"
+                return@setOnClickListener
+            }
+            try{
+                val i=Integer.parseInt(percentage)
+                if (i<0 || i>100) {
+                    binding.etSkillPercentage.error="Must be integer between 0 and 100"
+                    return@setOnClickListener
+                }
+            }catch (e: NumberFormatException){
+                binding.etSkillPercentage.error="Must be integer"
+                return@setOnClickListener
+            }
+
             launch {
                 context?.let {
                     val mSkill = Skill(type, name, Integer.parseInt(percentage))

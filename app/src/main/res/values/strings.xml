@@ -13,6 +13,7 @@
     <string-array name="cv_template">
         <item>CV1</item>
         <item>CV2</item>
+        <item>CV3</item>
     </string-array>
 
     <string name="app_name">CV Builder</string>
