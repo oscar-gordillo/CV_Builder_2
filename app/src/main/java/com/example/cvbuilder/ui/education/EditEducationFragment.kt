@@ -80,6 +80,27 @@ class EditEducationFragment : BaseFragment() {
             val degree=binding.degreeEducation.text.toString()
             val completionDate=binding.completionDateEducation.text.toString()
 
+            if (schoolName.isEmpty()) {
+                binding.schoolNameEducation.error="Required"
+                return@setOnClickListener
+            }
+            if (city.isEmpty()) {
+                binding.cityEducation.error="Required"
+                return@setOnClickListener
+            }
+            if (state.isEmpty()) {
+                binding.stateEducation.error="Required"
+                return@setOnClickListener
+            }
+            if (degree.isEmpty()) {
+                binding.degreeEducation.error="Required"
+                return@setOnClickListener
+            }
+            if (completionDate.isEmpty()) {
+                binding.completionDateEducation.error="Required"
+                return@setOnClickListener
+            }
+
             launch {
                 context?.let {
                     val mEducation = Education(schoolName, city, state, degree, completionDate)

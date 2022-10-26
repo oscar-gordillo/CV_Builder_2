@@ -5,7 +5,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
+import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -30,6 +30,7 @@ import com.example.cvbuilder.db.*
 import com.example.cvbuilder.network.APIClient
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -38,6 +39,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
+import kotlin.math.min
 
 
 class MainActivity : AppCompatActivity() {
@@ -54,17 +56,22 @@ class MainActivity : AppCompatActivity() {
 
         startforResultGalley = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if(it!=null) {
-                Toast.makeText(this, it.data?.data.toString(), Toast.LENGTH_LONG).show()
-                Log.i("TEST", it.data?.data.toString())
-                val uri = it.data?.data
+                //Toast.makeText(this, it.data?.data.toString(), Toast.LENGTH_LONG).show()
+                //Log.i("TEST", it.data?.data.toString())
+                //val uri = it.data?.data
 
                 try {
-                    val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+                    //val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+                    var bitmap = it.data?.extras?.get("data") as Bitmap
                     val stream = ByteArrayOutputStream()
                     bitmap.compress(Bitmap.CompressFormat.JPEG,50,stream);
                     val bytes = stream.toByteArray()
                     sImage= Base64.encodeToString(bytes, Base64.DEFAULT);
                     Log.i("TEST",sImage)
+
+                    bitmap = getCircularBitmap(bitmap)
+                    binding.navView.imageView.setImageBitmap(bitmap)
+
                 } catch (e: Exception) {
                     // TODO: handle exception
                     e.printStackTrace()
@@ -115,8 +122,8 @@ class MainActivity : AppCompatActivity() {
         if (item.itemId==R.id.action_exportPDFImage){
             val i = Intent()
             // Activity Action for the intent : Pick an item from the data, returning what was selected.
-            i.action = Intent.ACTION_PICK
-            i.type = "image/*"
+            i.action = MediaStore.ACTION_IMAGE_CAPTURE
+            //i.type = "image/*"
             startforResultGalley.launch(i)
         }
         if (item.itemId==R.id.action_exportPDF){
@@ -241,4 +248,36 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun getCircularBitmap(srcBitmap: Bitmap?): Bitmap {
+        val squareBitmapWidth = min(srcBitmap!!.width, srcBitmap.height)
+        // Initialize a new instance of Bitmap
+        // Initialize a new instance of Bitmap
+        val dstBitmap = Bitmap.createBitmap(
+            squareBitmapWidth,  // Width
+            squareBitmapWidth,  // Height
+            Bitmap.Config.ARGB_8888 // Config
+        )
+        val canvas = Canvas(dstBitmap)
+        // Initialize a new Paint instance
+        // Initialize a new Paint instance
+        val paint = Paint()
+        paint.isAntiAlias = true
+        val rect = Rect(0, 0, squareBitmapWidth, squareBitmapWidth)
+        val rectF = RectF(rect)
+        canvas.drawOval(rectF, paint)
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+        // Calculate the left and top of copied bitmap
+        // Calculate the left and top of copied bitmap
+        val left = ((squareBitmapWidth - srcBitmap.width) / 2).toFloat()
+        val top = ((squareBitmapWidth - srcBitmap.height) / 2).toFloat()
+        canvas.drawBitmap(srcBitmap, left, top, paint)
+        // Free the native object associated with this bitmap.
+        // Free the native object associated with this bitmap.
+        srcBitmap.recycle()
+        // Return the circular bitmap
+        // Return the circular bitmap
+        return dstBitmap
+    }
+
 }

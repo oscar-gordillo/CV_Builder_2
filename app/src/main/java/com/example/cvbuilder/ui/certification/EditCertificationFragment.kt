@@ -79,7 +79,23 @@ class EditCertificationFragment : BaseFragment() {
             val organization=binding.organizationCertification.text.toString()
             val date=binding.dateCertification.text.toString()
             val expiration=binding.expirationCertification.text.toString()
-            
+
+            if (name.isEmpty()) {
+                binding.nameCertification.error="Required"
+                return@setOnClickListener
+            }
+            if (organization.isEmpty()) {
+                binding.organizationCertification.error="Required"
+                return@setOnClickListener
+            }
+            if (date.isEmpty()) {
+                binding.dateCertification.error="Required"
+                return@setOnClickListener
+            }
+            if (expiration.isEmpty()) {
+                binding.expirationCertification.error="Required"
+                return@setOnClickListener
+            }
 
             launch {
                 context?.let {

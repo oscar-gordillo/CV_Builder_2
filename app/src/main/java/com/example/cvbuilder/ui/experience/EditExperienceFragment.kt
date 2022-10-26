@@ -80,6 +80,36 @@ class EditExperienceFragment : BaseFragment() {
             val endDate=binding.endDateExperience.text.toString()
             val jobTitle=binding.jobTitleExperience.text.toString()
             val description=binding.descriptionExperience.text.toString()
+
+            if (company.isEmpty()) {
+                binding.nameCompanyExperience.error="Required"
+                return@setOnClickListener
+            }
+            if (city.isEmpty()) {
+                binding.cityCompanyExperience.error="Required"
+                return@setOnClickListener
+            }
+            if (state.isEmpty()) {
+                binding.stateCompanyExperience.error="Required"
+                return@setOnClickListener
+            }
+            if (startDate.isEmpty()) {
+                binding.startDateExperience.error="Required"
+                return@setOnClickListener
+            }
+            if (endDate.isEmpty()) {
+                binding.endDateExperience.error="Required"
+                return@setOnClickListener
+            }
+            if (jobTitle.isEmpty()) {
+                binding.jobTitleExperience.error="Required"
+                return@setOnClickListener
+            }
+            if (description.isEmpty()) {
+                binding.descriptionExperience.error = "Required"
+                return@setOnClickListener
+            }
+
             launch {
                 context?.let {
                     val mExperience = Experience(company, city, state, startDate, endDate, jobTitle, description)
