@@ -61,6 +61,15 @@ class EditCertificationFragment : BaseFragment() {
         arguments?.let {
             // get the note value from the HomeFragment using Bundle instance
             certification = EditCertificationFragmentArgs.fromBundle(it).certification
+            val name= certification?.name
+            val organization=certification?.organization
+            val date=certification?.date
+            val expirationDate=certification?.expirationDate
+
+            binding.nameCertification.setText(name)
+            binding.organizationCertification.setText(organization)
+            binding.dateCertification.setText(date)
+            binding.expirationCertification.setText(expirationDate)
 //            val spinner=binding.spSkillType
 //            val type=skill?.type
 //            for(i in 0 until spinner.count){

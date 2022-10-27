@@ -59,6 +59,22 @@ class EditExperienceFragment : BaseFragment() {
         arguments?.let {
             // get the note value from the HomeFragment using Bundle instance
             experience = EditExperienceFragmentArgs.fromBundle(it).experience
+            val company= experience?.company
+            val city=experience?.city
+            val state=experience?.state
+            val startDate=experience?.startDate
+            val endDate= experience?.endDate
+            val jobTitle=experience?.jobTitle
+            val description=experience?.description
+
+
+            binding.nameCompanyExperience.setText(company)
+            binding.cityCompanyExperience.setText(city)
+            binding.stateCompanyExperience.setText(state)
+            binding.startDateExperience.setText(startDate)
+            binding.endDateExperience.setText(endDate)
+            binding.jobTitleExperience.setText(jobTitle)
+            binding.descriptionExperience.setText(description)
 //            val spinner=binding.spSkillType
 //            val type=skill?.type
 //            for(i in 0 until spinner.count){

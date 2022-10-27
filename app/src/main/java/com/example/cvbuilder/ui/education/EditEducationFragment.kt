@@ -60,6 +60,19 @@ class EditEducationFragment : BaseFragment() {
         arguments?.let {
             // get the note value from the HomeFragment using Bundle instance
             education = EditEducationFragmentArgs.fromBundle(it).education
+
+            val name= education?.schoolName
+            val city=education?.city
+            val state=education?.state
+            val degree=education?.degree
+            val completeDate=education?.completionDate
+
+            binding.schoolNameEducation.setText(name)
+            binding.cityEducation.setText(city)
+            binding.stateEducation.setText(state)
+            binding.degreeEducation.setText(degree)
+            binding.completionDateEducation.setText(completeDate)
+
 //            val spinner=binding.spSkillType
 //            val type=skill?.type
 //            for(i in 0 until spinner.count){
